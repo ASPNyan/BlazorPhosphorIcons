@@ -1,0 +1,114 @@
+﻿@page "/"
+@using System.Reflection
+@using Phosphor.Icons
+
+<script>
+    function updateWidthBasedOnInput($this) {
+        $this.style.width = `calc(${$this.value.length}ch + 16px)`
+        console.log($this.value.length)
+    }
+</script>
+
+<div class="settings">
+    <InputSelect TValue="IconType" @bind-Value="Type">
+        @foreach (var type in Enum.GetValues(typeof(IconType)))
+        {
+            <option value="@type">@type</option>
+        }
+    </InputSelect>
+
+    <InputText @bind-Value="@Search" placeholder="Search Icons"/>
+
+    <input type="color" @bind="@Color">
+
+    <input type="text" @bind="@Color" oninput="updateWidthBasedOnInput(this)">
+</div>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    .settings {
+        display: flex;
+        gap: 12px;
+        font-weight: bold;
+    }
+    
+    select, input, .settings div {
+        margin-bottom: 18px;
+        height: 24px;
+        padding: 0;
+        padding-block: 0;
+        padding-inline: 8px;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        color: @Color;
+        background-color: color-mix(oklch(from contrast-color(currentColor) calc(l * .75 + .30) c h), currentColor 15%);
+    }
+    
+    input[type=color] {
+        width: 24px;
+        padding-inline: 0;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+    }
+    
+    .settings :last-child {
+        min-width: calc(7ch + 16px);
+    }
+    
+    .icons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        color: @Color;
+        
+        .icon {
+            --bgc: color-mix(oklch(from contrast-color(currentColor) calc(l * .75 + .30) c h), currentColor 15%);
+            background-color: color-mix(oklch(from contrast-color(currentColor) calc(l * .75 + .30) c h), currentColor 15%);
+            border-radius: 18px;
+            width: 160px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding: 12px;
+            text-align: center;
+        }
+    }
+    svg {
+        width: 60px;
+        padding: 6px;
+        border-radius: 12px;
+        backdrop-filter: contrast(1.25);
+        aspect-ratio: 1 / 1;
+    }
+</style>
+
+<div class="icons">
+    @foreach (Type icon in _icons.Where(i => string.IsNullOrWhiteSpace(Search) || i.Name.Contains(Search, StringComparison.OrdinalIgnoreCase)))
+    {
+        <div class="icon">
+            <DynamicComponent Type="@icon" Parameters='new Dictionary<string, object> { ["Type"] = Type }'/>
+            <span>@(string.Concat(icon.Name.Select(c => char.IsUpper(c) ? $" {c}" : $"{c}"))[3..])</span>
+        </div>
+    }
+</div>
+
+@code {
+    private Type[] _icons = [];
+
+    private string Search { get; set; } = "";
+    private IconType Type { get; set; }
+    private string Color { get; set; } = "#ffffff";
+
+    protected override void OnInitialized()
+    {
+        _icons = [..Assembly.GetAssembly(typeof(PhAcorn))!.GetTypes().Where(t => !t.IsEnum && typeof(IComponent).IsAssignableFrom(t))];
+    }
+
+}
