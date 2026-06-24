@@ -3,6 +3,7 @@ Sebastian Ricketts <github.com/ASPNyan>
 1.0, June 24, 2026
 :toc:
 :icons: font
+ifndef::env-github[]
 ++++
 <style>
 @font-face {
@@ -38,6 +39,7 @@ table tbody tr { background-color: #0b0b22 !important; }
 table tbody tr:nth-child(2n) { background-color: #161633 !important; }
 </style>
 ++++
+endif::[]
 
 A Blazor component wrapper for https://phosphoricons.com/[Phosphor Icons], providing all icon variants as strongly-typed, composable Razor components.
 
