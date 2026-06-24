@@ -1,0 +1,163 @@
+= Blazor Phosphor Icons
+Sebastian Ricketts <github.com/ASPNyan>
+1.0, June 24, 2026
+:toc:
+:icons: font
+++++
+<style>
+@font-face {
+    font-family: 'Maple Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: local("Maple Mono"), local("Maple Mono NF"), local("Maple Mono NF CN"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.woff2) format('woff2'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Maple Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: local("Maple Mono Bold"), local("Maple Mono NF Bold"), local("Maple Mono NF CN Bold"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-600-normal.woff2) format('woff2'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-600-normal.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-600-normal.ttf) format('truetype');
+}
+
+body {
+    font: normal 400 normal 16px / 1.4 'Maple Mono', ui-monospace, monospace;
+    background-color: #22222f;
+}
+h1, h2, h3, #toctitle { background-color: transparent !important; color: white !important; font-weight: 600; filter: none !important; }
+#toc.toc { background-color: #0b0b1b !important; }
+table thead { background-color: #1a1a5a !important; color: white !important; }
+table tbody tr { background-color: #0b0b22 !important; }
+table tbody tr:nth-child(2n) { background-color: #161633 !important; }
+</style>
+++++
+
+A Blazor component wrapper for https://phosphoricons.com/[Phosphor Icons], providing all icon variants as strongly-typed, composable Razor components.
+
+== Installation
+
+Add a reference to the `PhosphorIcons` project or package in your Blazor application.
+
+Then add the namespace to your `_Imports.razor`:
+
+[source,razor]
+----
+@using Phosphor.Icons
+----
+
+== Usage
+
+Each icon is its own Razor component, named after the Phosphor icon it represents (e.g. `PhAcorn`, `PhArrowLeft`).
+Every icon component accepts a `Type` parameter of type `IconType` to select the visual style, as well as any additional HTML attributes which are forwarded directly to the underlying `<svg>` element.
+
+Icons don't come with a default size, so you are responsible for sizing all of your icons. SVGs expose `width` and
+`height` attributes that accept the same values as `style="width: \{WIDTH\}; height: \{HEIGHT\}", so opting for
+`width="1em"` and `height="1em"` may be preferred over a `style` attribute.
+
+=== Basic Example
+
+[source,razor]
+----
+<PhAcorn Type="IconType.Regular" />
+----
+
+=== With Additional SVG Attributes
+
+Because icons support attribute splatting, you can pass any standard HTML/SVG attribute directly to the component:
+
+[source,razor]
+----
+<PhAcorn Type="IconType.Bold" class="my-icon" width="1em" height="1em" style="color: hotpink;" aria-hidden="true" />
+----
+
+=== Dynamic Usage
+
+Icons can be rendered dynamically using `DynamicComponent` — useful for rendering icons from a data-driven list:
+
+[source,razor]
+----
+<DynamicComponent Type="@iconType" Parameters='new Dictionary<string, object> { ["Type"] = IconType.Regular }' />
+----
+
+All available icon component types can be discovered at runtime via reflection:
+
+[source,csharp]
+----
+Assembly.GetAssembly(typeof(PhAcorn))!
+        .GetTypes()
+        .Where(t => !t.IsEnum && typeof(IComponent).IsAssignableFrom(t));
+----
+
+== Icon Types
+
+The `IconType` enum controls the visual style of every icon:
+
+[cols="1,2", options="header"]
+|===
+| Value | Description
+
+| `Regular`
+| Standard weight outline style
+
+| `Bold`
+| Heavier stroke weight
+
+| `Thin`
+| Lighter, finer stroke weight
+
+| `Light`
+| Between thin and regular
+
+| `Duotone`
+| Two-tone style with a semi-transparent secondary layer
+
+| `Fill`
+| Fully filled / solid style
+|===
+
+== Parameters
+
+All icon components share the same parameter surface:
+
+[cols="1,1,1,3", options="header"]
+|===
+| Parameter | Type | Required | Description
+
+| `Type`
+| `IconType`
+| No
+| Selects the icon style variant to render. Defaults to `IconType.Regular`.
+
+| _(unmatched attributes)_
+| `IReadOnlyDictionary<string, object?>`
+| No
+| Any additional attributes (e.g. `class`, `style`, `aria-*`) are forwarded to the `<svg>` element.
+|===
+
+== Preview / Test Project
+
+A preview project is included under `Test/` targeting `net11.0` and `net10.0`. It renders every icon in the library in a filterable, colour-configurable grid, allowing you to browse all available icons and styles interactively.
+
+To run it:
+
+[source,shell]
+----
+dotnet run --project Test/Test.csproj
+----
+
+The preview supports:
+
+* Filtering icons by name via a search input
+* Switching between all `IconType` variants via a dropdown
+* Choosing a custom colour applied to the icon grid
+
+== Licence
+
+See link:LICENSE[LICENSE] for details.

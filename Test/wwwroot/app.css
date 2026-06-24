@@ -1,6 +1,28 @@
+@font-face {
+    font-family: 'Maple Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: local("Maple Mono"), local("Maple Mono NF"), local("Maple Mono NF CN"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.woff2) format('woff2'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-400-normal.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Maple Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: local("Maple Mono Bold"), local("Maple Mono NF Bold"), local("Maple Mono NF CN Bold"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-600-normal.woff2) format('woff2'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-600-normal.woff) format('woff'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/maple-mono@latest/latin-600-normal.ttf) format('truetype');
+}
+
 html, body {
     color-scheme: dark only;
-    font: normal 400 normal 16px / 1.4 'Maple Mono NF CN', 'Maple Mono NF', 'Maple Mono', ui-monospace, monospace;
+    font: normal 400 normal 16px / 1.4 'Maple Mono', ui-monospace, monospace;
     background-color: #222;
 }
 
