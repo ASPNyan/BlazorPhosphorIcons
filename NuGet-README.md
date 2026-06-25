@@ -1,6 +1,6 @@
 ﻿# Phosphor Icons
 
-A Blazor component wrapper for (Phosphor Icons)[https://phosphoricons.com/], providing all icon variants as strongly-typed, composable Razor components.
+A Blazor component wrapper for [Phosphor Icons](https://phosphoricons.com/), providing all icon variants as strongly-typed, composable Razor components.
 
 ## Installation
 

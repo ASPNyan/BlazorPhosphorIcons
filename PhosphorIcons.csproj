@@ -9,7 +9,7 @@
 
   <PropertyGroup Label="NuGet">
     <PackageId>PhosphorIcons</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>ASPNyan</Authors>
     <Description>A collection of icons from Phosphor Icons for use in Blazor applications.</Description>
     <Copyright>2026 Sebastian Ricketts (ASPNyan) under Apache 2.0</Copyright>
