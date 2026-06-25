@@ -45,7 +45,7 @@ A Blazor component wrapper for https://phosphoricons.com/[Phosphor Icons], provi
 
 == Installation
 
-Add a reference to the `PhosphorIcons` project or package in your Blazor application.
+Add a reference to the `PhosphorIcons` project or https://nuget.org/Packages/PhosphorIcons[package] in your Blazor application.
 
 Then add the namespace to your `_Imports.razor`:
 
@@ -60,7 +60,7 @@ Each icon is its own Razor component, named after the Phosphor icon it represent
 Every icon component accepts a `Type` parameter of type `IconType` to select the visual style, as well as any additional HTML attributes which are forwarded directly to the underlying `<svg>` element.
 
 Icons don't come with a default size, so you are responsible for sizing all of your icons. SVGs expose `width` and
-`height` attributes that accept the same values as `style="width: \{WIDTH\}; height: \{HEIGHT\}", so opting for
+`height` attributes that accept the same values as `style="width: \{WIDTH\}; height: \{HEIGHT\}"`, so opting for
 `width="1em"` and `height="1em"` may be preferred over a `style` attribute.
 
 === Basic Example
